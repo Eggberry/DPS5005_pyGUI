@@ -8,7 +8,7 @@ import csv
 import datetime
 
 from dps_modbus import Serial_modbus
-from dps_modbus import Dps5005
+from dps_modbus import DP6012
 from dps_modbus import Import_limits
 
 from PyQt5.QtCore import pyqtSlot, pyqtSignal, QRunnable, QThreadPool, QTimer, QThread, QCoreApplication, QObject, QMutex, Qt
@@ -68,7 +68,7 @@ class dps_GUI(QMainWindow):
 		super(dps_GUI,self).__init__()
 		loadUi('dps_GUI.ui', self)
 		
-		self.setWindowTitle('DPS5005_pyGUI')
+		self.setWindowTitle('DP6012_pyGUI')
 		
 		self.mutex = QMutex()
 		
@@ -540,8 +540,8 @@ class dps_GUI(QMainWindow):
 	def read_all(self):
 		data = self.pass_2_dps('read_all')
 		if data != False:       
-			self.vout = ("%5.2f" % data[2]) # vout
-			self.iout = ("%5.3f" % data[3]) # iout
+			self.vout = ("%5.2f" % data[10]) # vout
+			self.iout = ("%5.3f" % data[11]) # iout
 			
 			self.accrued_capacity(self.iout)
 			
@@ -552,22 +552,22 @@ class dps_GUI(QMainWindow):
 			
 			self.update_graph_plot()
 			
-			self.lcdNumber_vset.display("%5.2f" % data[0])  # vset
-			self.lcdNumber_iset.display("%5.3f" % data[1])  # iset
+			self.lcdNumber_vset.display("%5.2f" % data[8])  # vset
+			self.lcdNumber_iset.display("%5.2f" % data[9])  # iset
 			self.lcdNumber_vout.display(self.vout)  # vout
 			self.lcdNumber_iout.display(self.iout)  # iout
 			
-			self.lcdNumber_pout.display("%5.2f" % data[4])  # power
-			self.lcdNumber_vin.display("%5.2f" % data[5])       # vin
+			self.lcdNumber_pout.display("%5.2f" % data[13])  # power
+			self.lcdNumber_vin.display("%5.2f" % data[14])       # vin
 		# lock
-			value = data[6]
+			value = data[15]
 			if value == 1:
 				self.radioButton_lock.setChecked(True)
 			else:
 				self.radioButton_lock.setChecked(False)
 				
 		# protection
-			value = data[7]
+			value = data[16]
 			if value == 1:
 				self.label_protect.setText('Protection :   OVP')
 			elif value == 2:
@@ -578,13 +578,13 @@ class dps_GUI(QMainWindow):
 				self.label_protect.setText('Protection :   OK')
 		
 		# cv/cc 
-			if data[8] == 1:
+			if data[17] == 1:
 				self.label_cccv.setText('Mode        :   CC')
 			else:
 				self.label_cccv.setText('Mode        :   CV')
 
 		# on/off    
-			value = data[9]
+			value = data[18]
 			if value == 1:
 				self.label_onoff.setText('Output      :   ON')  # on/off
 				self.pushButton_onoff.setChecked(True)
@@ -595,12 +595,11 @@ class dps_GUI(QMainWindow):
 				self.pushButton_onoff.setText("OFF")
 
 		# slider    
-			value = int(data[10])
+			value = int(data[72])
 			self.horizontalSlider_brightness.setValue(value)    # brightness
-			self.label_brightness.setText('Brightness Level:   %s' % value)
-			
-			self.label_model.setText("Model       :   %s" % data[11])   # model
-			self.label_version.setText("Version     :   %s" % data[12]) # version
+			self.label_brightness.setText('Brightness Level:  %s' % value)
+			self.label_model.setText("Model      :   %s -%s" % ((str(int(data[0]/10))),(str(int(data[0]%10)))) )   # model
+			self.label_version.setText("Firmware :   %s" % data[3]) # version
 	#       self.lcdNumber_iout.display(data[13])   # extract_m
 	#       self.lcdNumber_iout.display(data[14])   # iout
 	#       self.lcdNumber_iout.display(data[15])   # iout
@@ -622,7 +621,7 @@ class dps_GUI(QMainWindow):
 					
 	def combobox_populate(self):        # collects info on startup		
 		self.comboBox_datarate.clear()
-		self.comboBox_datarate.addItems(["9600", "2400", "4800", "19200"])  # note: 2400 & 19200 doesn't seem to work
+		self.comboBox_datarate.addItems(["9600", "2400", "4800", "19200", "115200"])  # note: 2400 & 19200 doesn't seem to work
 
 #--- serial port stuff  
 	def scan_serial_ports(self):
@@ -660,7 +659,7 @@ class dps_GUI(QMainWindow):
 						baudrate = abs(int(self.combobox_datarate_read()))
 						slave_addr = abs(int(self.lineEdit_slave_addr.text()))
 						ser = Serial_modbus(port, slave_addr, baudrate, 8)
-						dps = Dps5005(ser, self.limits) #example '/dev/ttyUSB0', 1, 9600, 8)
+						dps = DP6012(ser, self.limits) #example '/dev/ttyUSB0', 1, 9600, 8)
 						if dps.version() != '':
 							self.serialconnected = True
 							self.pushButton_connect.setText("Connected")
@@ -681,7 +680,7 @@ class dps_GUI(QMainWindow):
 					baudrate = abs(int(self.combobox_datarate_read()))
 					slave_addr = abs(int(self.lineEdit_slave_addr.text()))
 					ser = Serial_modbus(self.limits.port_set, slave_addr, baudrate, 8)
-					dps = Dps5005(ser, self.limits) #example '/dev/ttyUSB0', 1, 9600, 8)
+					dps = DP6012(ser, self.limits) #example '/dev/ttyUSB0', 1, 9600, 8)
 					if dps.version() != '':
 						self.serialconnected = True
 						self.pushButton_connect.setText("Connected")

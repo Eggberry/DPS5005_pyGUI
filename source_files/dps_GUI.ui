@@ -208,7 +208,7 @@
          </size>
         </property>
         <property name="text">
-         <string>Model       :</string>
+         <string>Model      :</string>
         </property>
        </widget>
       </item>
@@ -233,7 +233,7 @@
          </size>
         </property>
         <property name="text">
-         <string>Version     :</string>
+         <string>Firmware :</string>
         </property>
        </widget>
       </item>
