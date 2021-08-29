@@ -1,3 +1,14 @@
+This version is modified for the Riden DP serie power supply.
+Tested on 
+Hardware DP6012 - 1
+Firmware 1.31 and 1.34
+
+Changes made:
+Register numers changed for the DP registers with use of the tables of 
+https://github.com/msillano/RD6006-Super-power-supply/blob/master/RD6006_prtotocol_en.pdf
+https://github.com/Baldanos/rd6006/blob/master/registers.md
+
+
 # DPS5005_pyGUI
 A python GUI to display &amp; control DPS5005 power supply
 
