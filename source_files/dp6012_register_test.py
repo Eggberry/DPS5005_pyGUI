@@ -1,6 +1,6 @@
- 
+# lines used to explore DP registers
+
 import minimalmodbus
- 
  
 instrument = minimalmodbus.Instrument('/dev/ttyUSB1', 1) # port name, slave address (in decimal)
 instrument.serial.port          # this is the serial port name
