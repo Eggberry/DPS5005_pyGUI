@@ -10,7 +10,7 @@ Changes made:
 * Changed the Model and Firmware reading
 * Added serial speed 115200
 
-Note:  The battery charging mode use the main Plus and Minus terminals of the unit, not the special battery charging terminal !
+Note:  The battery charging mode use the main Plus and Minus terminals of the unit, as the DPS5005, not the special battery charging terminal !
 
 # DPS5005_pyGUI
 A python GUI to display &amp; control DPS5005 power supply
