@@ -1,4 +1,4 @@
-# This version is modified for the Riden DP serie power supply.
+# This version is modified for the Riden DP serie power supplies.
 Tested on 
 * Hardware DP6012 - 1
 * Firmware 1.31 and 1.34
