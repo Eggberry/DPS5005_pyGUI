@@ -8,7 +8,7 @@ Changes made:
 * https://github.com/msillano/RD6006-Super-power-supply/blob/master/RD6006_prtotocol_en.pdf
 * https://github.com/Baldanos/rd6006/blob/master/registers.md
 * Changed the Model and Firmware reading
-* Added serial speed 115200
+* Added serial speeds till 115200   Startup with 115200 gives sometimes a broken connection. 57600 looks to be more stable.
 
 Note:  The battery charging mode use the main Plus and Minus terminals of the unit, as the DPS5005, not the special battery charging terminal !
 
