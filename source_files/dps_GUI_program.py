@@ -621,7 +621,7 @@ class dps_GUI(QMainWindow):
 					
 	def combobox_populate(self):        # collects info on startup		
 		self.comboBox_datarate.clear()
-		self.comboBox_datarate.addItems(["9600", "2400", "4800", "19200", "115200"])  # note: 2400 & 19200 doesn't seem to work
+		self.comboBox_datarate.addItems(["57600","38400","19200", "9600", "115200"])  # note: with 115200 sometimes broken connection 
 
 #--- serial port stuff  
 	def scan_serial_ports(self):
