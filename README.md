@@ -4,7 +4,7 @@ Tested on
 * Firmware 1.31 and 1.34
 
 Changes made:
-* Register numers changed for the DP registers with use of the tables of 
+* Register numbers changed for the DP registers with use of the tables from : 
 * https://github.com/msillano/RD6006-Super-power-supply/blob/master/RD6006_prtotocol_en.pdf
 * https://github.com/Baldanos/rd6006/blob/master/registers.md
 * Changed the Model and Firmware reading
